@@ -1,13 +1,12 @@
 import tkinter as tk
-import asyncio
 
+from game import Game
 from render import Renderer
 
 class App:
-    def __init__(self, game):
-        self.game = game
+    def __init__(self):
         self.main_window = Window(100, 100)
-        self.game.width, self.game.height = self.main_window.width, self.main_window.height
+        self.game = Game(self.main_window.width, self.main_window.height)
         self.canvas = tk.Canvas(self.main_window, width=self.game.width, height=self.game.height, bg='#EEE', highlightthickness=0)
         self.mainloop = None
         Renderer.set_canvas(self.canvas)
@@ -18,7 +17,8 @@ class App:
         self.main_window.start()
 
     def kill(self):
-        self.mainloop.set() # stope the mainloop
+        if self.mainloop:
+            self.mainloop.set() # stop the mainloop
 
 
 class Window(tk.Tk):

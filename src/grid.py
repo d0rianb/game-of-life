@@ -1,16 +1,26 @@
 from render import Renderer
 
-
 class Grid:
     def __init__(self, rows, cols):
         self.cells = []
         self.rows = rows
         self.cols = cols
 
+    @staticmethod
+    def generate(cols, width, height):
+        ''' Generate a grid from a certain number of columns with square cells '''
+        grid_gap = width / cols
+        rows = int(height / grid_gap)
+        return Grid(rows, cols)
+
     def initialize(self):
         for i in range(rows):
             for j in range(cols):
-                self.add_cell(Cell(self, i, j))
+                self.cells.append(Cell(self, i, j))
+
+    def get_cell(self, x, y):
+        return filter(lambda cell: cell.x == x and cell.y == y, self.cells)
+
 
     def toggle_state(self, x, y, state=True):
         # no args : toggle state / True = alive / False = dead
@@ -19,10 +29,6 @@ class Grid:
             cell.is_alive = state
         else:
             cell.is_alive = not cell.is_alive
-
-    def add_cell(self, cell):
-        # TODO: check if cell already exists
-        self.cells.append(self, cell)
 
     def get_neighbours(self, cell):
         neighbours = []
@@ -35,14 +41,11 @@ class Grid:
     def count_alive_neighbours(self, cell):
         return len(self.get_neighbours(cell))
 
-    def get_cell(self, x, y):
-        return filter(lambda cell: cell.x == x and cell.y == y, self.cells)
-
     def render(self, width, height, grid_gap):
         for x in range(self.cols):
-            Renderer.line(x*grid_gap, 0, x*grid_gap, height)
+            Renderer.line(x*grid_gap, 0, x*grid_gap, height, color='#aaa')
         for y in range(self.rows):
-            Renderer.line(0, y*grid_gap, width, y*grid_gap)
+            Renderer.line(0, y*grid_gap, width, y*grid_gap, color='#aaa')
 
 
 class Cell:

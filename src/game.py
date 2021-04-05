@@ -6,12 +6,12 @@ FRAMERATE = 60 # fps
 
 
 class Game:
-    def __init__(self):
-        self.grid = Grid(50, 40)
+    def __init__(self, width, height):
+        self.grid = Grid.generate(50, width, height) # 50 columns
+        self.width = width
+        self.height = height
         self.alive_cells = []
         self.alive_cells_coords = []
-        self.width = 0   # has to be set by the app
-        self.height = 0  # has to be set by the app
 
 
     @set_interval(1 / FRAMERATE) # OPTIMIZE: multiple threads

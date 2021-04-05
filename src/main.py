@@ -6,10 +6,8 @@
 #   E : état actuel de la cellule (entier naturel égal à 0 pour une cellule morte et égal à 1 pour une cellule vivante).
 
 from app import App
-from game import Game
 
 if __name__ == '__main__':
     print('Game is loading')
-    game = Game()
-    app = App(game)
+    app = App()
     app.start()
