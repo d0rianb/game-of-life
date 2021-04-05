@@ -14,7 +14,7 @@ class Renderer:
 
     @staticmethod
     def line(x1, y1, x2, y2):
-        pass
+        Renderer.canvas.create_line(x1, y1, x2, y2, smooth=1, capstyle='round')
 
     @staticmethod
     def rect(x, y, width, height, color='#555'):

@@ -38,11 +38,11 @@ class Grid:
     def get_cell(self, x, y):
         return filter(lambda cell: cell.x == x and cell.y == y, self.cells)
 
-    def render(self):
-        for x in range(self.grid.cols):
-            Renderer.line(x*GRID_GAP, 0, x*GRID_GAP, HEIGHT)
-        for y in range(self.grid.rows):
-            Renderer.line(0, y*GRID_GAP, WIDTH, y*GRID_GAP)
+    def render(self, width, height, grid_gap):
+        for x in range(self.cols):
+            Renderer.line(x*grid_gap, 0, x*grid_gap, height)
+        for y in range(self.rows):
+            Renderer.line(0, y*grid_gap, width, y*grid_gap)
 
 
 class Cell:
