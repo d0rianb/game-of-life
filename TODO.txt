@@ -1,0 +1,10 @@
+TODO :
+ - Detect click --> retrieve cell & toggle state
+ - Recalculate grid on resize
+ - Viewbox & deplacement
+ - Start screen to adjust the parameter of the simulation
+ - Multithread the render for a faster execution
+
+
+ISSUE :
+ - None (for the moment)
