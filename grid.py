@@ -22,7 +22,7 @@ class Grid:
 
     def add_cell(self, cell):
         # TODO: check if cell already exists
-        self.cells.push(self, cell)
+        self.cells.append(self, cell)
 
     def get_neighbours(self, cell):
         neighbours = []
