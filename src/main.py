@@ -8,6 +8,6 @@
 from app import App
 
 if __name__ == '__main__':
-    print('Game is loading')
+    print('Game of life is loading')
     app = App()
     app.start()

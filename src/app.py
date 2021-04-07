@@ -3,22 +3,28 @@ import tkinter as tk
 from game import Game
 from render import Renderer
 
+FRAMERATE = 60 # fps
+
 class App:
     def __init__(self):
         self.main_window = Window(100, 100)
         self.game = Game(self.main_window.width, self.main_window.height)
         self.canvas = tk.Canvas(self.main_window, width=self.game.width, height=self.game.height, bg='#EEE', highlightthickness=0)
         self.mainloop = None
+        self.bind_keys()
         Renderer.set_canvas(self.canvas)
+
+    def update(self):
+        self.game.update()
+        self.main_window.after(FRAMERATE // 60, self.update)
+
+    def bind_keys(self):
+        self.main_window.on_event('<Button-1>', lambda event: self.game.toggle_cell_state(event.x, event.y))
 
     def start(self):
         self.canvas.pack()
-        self.mainloop = self.game.update()
-        self.main_window.start()
-
-    def kill(self):
-        if self.mainloop:
-            self.mainloop.set() # stop the mainloop
+        self.update()
+        self.main_window.mainloop()
 
 
 class Window(tk.Tk):
@@ -35,8 +41,8 @@ class Window(tk.Tk):
         self.geometry('%dx%d%+d%+d' % (self.width, self.height, offset_x, offset_y))
         # TODO: handle on resize event
 
-    def start(self):
-        self.mainloop()
+    def on_event(self, event_name, callback):
+        self.bind(event_name, callback)
 
     def kill(self, *args):
         self.destroy()

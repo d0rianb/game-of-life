@@ -1,6 +1,6 @@
 import tkinter as tk
 
-
+ 
 # TODO: Zoom level
 # View offset
 offset_x, offset_y = 0, 0

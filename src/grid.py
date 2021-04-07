@@ -5,6 +5,7 @@ class Grid:
         self.cells = []
         self.rows = rows
         self.cols = cols
+        self.initialize()
 
     @staticmethod
     def generate(cols, width, height):
@@ -14,12 +15,14 @@ class Grid:
         return Grid(rows, cols)
 
     def initialize(self):
-        for i in range(rows):
-            for j in range(cols):
-                self.cells.append(Cell(self, i, j))
+        for i in range(self.rows):
+            for j in range(self.cols):
+                self.cells.append(Cell(i, j))
 
     def get_cell(self, x, y):
-        return filter(lambda cell: cell.x == x and cell.y == y, self.cells)
+        cell_array = list(filter(lambda cell: cell.x == x and cell.y == y, self.cells))
+        if len(cell_array):
+            return cell_array[0]
 
 
     def toggle_state(self, x, y, state=True):
@@ -34,8 +37,8 @@ class Grid:
         neighbours = []
         for i in range(3):
             for j in range(3):
-                if not(i == 1 and j == 1) and not (x - 1 + i < 0 or y - 1 + j < 0 or x - 1 + i >= self.cols or y - 1 + i >= self.rows):
-                    neighbours.append(self.get_cell(x - 1 + i, y - 1 + j))
+                if not(i == 1 and j == 1) and not (cell.x - 1 + i < 0 or cell.y - 1 + j < 0 or cell.x - 1 + i >= self.cols or cell.y - 1 + i >= self.rows):
+                    neighbours.append(self.get_cell(cell.x - 1 + i, cell.y - 1 + j))
         return neighbours
 
     def count_alive_neighbours(self, cell):
@@ -54,11 +57,8 @@ class Cell:
         self.y = y
         self.is_alive = False
 
-    def kill(self):
-        self.grid.toggle_state(self.x, self.y)
-
-    def spawn(self):
-        self.grid.toggle_state(self.x, self.y)
+    def __repr__(self):
+        return f'Cell at {self.x}, {self.y}'
 
     def render(self, grid_gap):
         Renderer.rect(self.x*grid_gap, self.y*grid_gap, grid_gap, grid_gap)
