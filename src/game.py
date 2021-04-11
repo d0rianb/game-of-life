@@ -6,22 +6,15 @@ class Game:
         self.grid = Grid.generate(50, width, height) # 50 columns
         self.width = width
         self.height = height
-        self.alive_cells = []
-        self.alive_cells_coords = []
 
     def update(self):
-        self.alive_cells = [cell for cell in self.grid.cells if cell.is_alive]
-        # self.dead_cells = [cell for cell in self.grid.cells if not cell.is_alive] # OPTIMIZE: remove ?
-        # for cell in self.alive_cells:
+        print('update')
+        # for cell in self.grid.cells:
         #     n = self.grid.count_alive_neighbours(cell)
-        #     if not (n == 2 or n == 3):
-        #         self.grid.toggle_state(cell.x, cell.y, False)
-        #         # cell.kill()
-        # for cell in self.dead_cells:
-        #     n = self.grid.count_alive_neighbours(cell)
-        #     if n == 3:
-        #         self.grid.toggle_state(cell.x, cell.y, False)
-        #         # cell.spawn()
+        #     if cell.is_alive and not (n == 2 or n == 3):
+        #         self.grid.toggle_state(cell.x, cell.y, False) # kill a cell
+        #     if not cell.is_alive and n == 3:
+        #         self.grid.toggle_state(cell.x, cell.y, True) # spawn a cell
         self.render()
 
     def toggle_cell_state(self, x, y):
@@ -32,5 +25,6 @@ class Game:
         Renderer.rect(0, 0, self.width, self.height, color='#F1E7DC') # background
         grid_gap = min(self.width/self.grid.cols, self.height/self.grid.rows)
         self.grid.render(self.width, self.height, grid_gap)
-        for cell in self.alive_cells:
-            cell.render(grid_gap)
+        for cell in self.grid.cells:
+            if cell.is_alive:
+                cell.render(grid_gap)
